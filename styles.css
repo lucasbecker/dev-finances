@@ -1,0 +1,122 @@
+/*=== Global ========= */
+
+:root {
+  --dark-blue: #363f5f;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #f0f2f5;
+  font-family: 'Poppins', sans-serif;
+}
+
+.container {
+  width: min(90vw, 800px);
+  margin: auto;
+}
+
+h2 {
+  margin-top: 3.2rem;
+  margin-bottom: 0.8rem;
+  color: var(--dark-blue);
+  font-weight: normal;
+}
+
+/*=== Header ========= */
+
+header {
+  background-color: #2d4a22;
+  padding: 2rem 0 10rem;
+  text-align: center;
+}
+
+#logo {
+  color: #ffffff;
+  font-weight: 100;
+}
+
+/*=== Balance ========= */
+
+#balance {
+  margin-top: -8rem;
+}
+#balance h2 {
+  color: white;
+  margin-top: 0;
+}
+
+.card {
+  background-color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 0.25rem;
+  margin-bottom: 2rem;
+  color: var(--dark-blue);
+}
+.card h3 {
+  font-weight: normal;
+  font-size: 1rem;
+}
+.card p {
+  font-size: 2rem;
+  line-height: 3rem;
+  margin-top: 1rem;
+}
+.card.total {
+  background-color: #49aa26;
+  color: white;
+}
+
+/*=== Table ========= */
+
+table {
+  width: 100%;
+  border-spacing: 0 0.5rem;
+  color: #969cd3;
+}
+table tbody tr {
+  opacity: 0.7;
+}
+table tbody tr:hover {
+  opacity: 1;
+}
+table thead tr:first-child,
+table tbody tr:first-child {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+table thead th {
+  background-color: white;
+  font-weight: normal;
+  padding: 1rem 2rem;
+  text-align: left;
+}
+table tbody td {
+  background-color: white;
+  padding: 1rem 2rem;
+}
+td.description {
+  color: var(--dark-blue);
+}
+td.income {
+  color: #12a454;
+}
+td.expense {
+  color: #e92929;
+}
+
+/*=== Footer ========= */
+footer {
+  padding: 4rem 0 2rem;
+  text-align: center;
+  color: var(--dark-blue);
+  opacity: .6;
+}
+
+footer p a {
+  text-decoration: none;
+  color: #49aa26;
+}
