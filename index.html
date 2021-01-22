@@ -11,32 +11,60 @@
 </head>
 <body>
   <header>
-    <h1 id="logo">dev.finance$</h1>
+    <img id="logo" src="./assets/logo.svg" alt="Logo Dev Finances">
   </header>
+  
   <main class="container">
     <section id="balance">
-      <h2>Balanço</h2>
+      <h2 class="sr-only">Balanço</h2>
       <div class="card">
-        <h3>Entradas</h3>
+        <h3>
+          <span>Entradas</span>
+          <img src="./assets/income.svg" alt="Imagem de Entradas">
+        </h3>
         <p>R$ 5.000,00</p>
       </div>
       <div class="card">
-        <h3>Saídas</h3>
+        <h3>
+          <span>Saídas</span>
+          <img src="./assets/expense.svg" alt="Imagem de Saídas">
+        </h3>
         <p>R$ 2.000,00</p>
       </div>
       <div class="card total">
-        <h3>Total</h3>
+        <h3>
+          <span>Total</span>
+          <img src="./assets/total.svg" alt="Imagem de Total">
+        </h3>
         <p>R$ 3.000,00</p>
       </div>
     </section>
     <section id="transactions">
-      <h2>Transações</h2>
+      <h2 class="sr-only">Transações</h2>
+
+      <div class="actions">
+        <a 
+        href="#" 
+        class="button new"
+        onclick="modal.open()"  
+      >
+        + Nova Transação
+      </a>
+      <a 
+        href="#" 
+        class="button clear"
+      >
+        Limpar Transações
+      </a>
+      </div>
+
       <table id="data-table">
         <thead>
           <tr>
             <th>Descrição</th>
             <th>Valor</th>
             <th>Data</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -44,24 +72,98 @@
             <td class="description">Luz</td>
             <td class="expense">- R$ 500,00</td>
             <td class="date">23/01/2021</td>
+            <td>
+              <img src="./assets/minus.svg" alt="Remover Transação">
+            </td>
           </tr>
           <tr>
             <td class="description">Freelance</td>
             <td class="income">R$ 6.000,00</td>
             <td class="date">24/01/2021</td>
+            <td>
+              <img src="./assets/minus.svg" alt="Remover Transação">
+            </td>
           </tr>
           <tr>
             <td class="description">Aluguel</td>
             <td class="expense">- R$ 1.500,00</td>
             <td class="date">26/01/2021</td>
+            <td>
+              <img src="./assets/minus.svg" alt="Remover Transação">
+            </td>
           </tr>
         </tbody>
       </table>
     </section>
   </main>
+
+  <div class="modal-overlay">
+    <div class="modal">
+      <div class="modal-content">
+        <h2>Nova Transação</h2>
+        <form>
+          <div class="input-group">
+            <label 
+              class="sr-only" 
+              for="description"
+            >
+              Descrição
+            </label>
+            <input 
+              type="text" 
+              name="description" 
+              id="description" 
+              placeholder="Descrição"
+            >
+          </div>
+          <div class="input-group">
+            <label 
+              class="sr-only" 
+              for="amount"
+            >
+              Valor
+            </label>
+            <input 
+              type="number" 
+              step="0.1"
+              name="amount" 
+              id="amount" 
+              placeholder="0,00"
+            >
+            <small class="help">Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais.</small>
+          </div>
+          <div class="input-group">
+            <label 
+              class="sr-only" 
+              for="date"
+            >
+              Data
+            </label>
+            <input 
+              type="date" 
+              name="date" 
+              id="date" 
+              placeholder="22/01/2021"
+            >
+          </div>
+          <div class="input-group actions">
+            <a 
+              href="#" 
+              class="button cancel"
+              onclick="modal.close()"  
+            >Cancelar</a>
+            <button type="submit">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>2021 - dev.finance$</p>
     <p>Desenvolvido por <a href="https://lucasbecker.github.io" target="_blank" >Lucas Becker</a> durante <br>a MaratonaDiscover da Rocketseat.</p>
   </footer>
+
+  <script src="./script.js"></script>
 </body>
 </html>
