@@ -139,6 +139,14 @@ header {
   color: white;
 }
 
+#incomeDisplay {
+  color: var(--green);
+}
+
+#expenseDisplay {
+  color: var(--red);
+}
+
 /*=== Table =========*/
 #transactions{
   width: 100%;
@@ -255,6 +263,9 @@ footer {
   color: var(--dark-blue);
   opacity: .6;
 }
+
+/*=== GitHub Corners by Tim Holman (@twholman) ======*/
+.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
 
 /*=== Responsive ======*/
 @media (min-width: 800px) {

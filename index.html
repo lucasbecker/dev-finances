@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>dev.finance$</title>
+  <meta name="title" content="dev.finance$">
+  <meta name="description" content="Aplicação web de controle de finanças desenvolvida por Lucas Becker durante a MaratonaDiscover da Rocketseat.">
+  <meta name="keywords" content="HTML, HTML5, CSS, CSS3, JavaScript, JS, Web, Dev, Finances, Finanças,Rocketseat, MaratonaDiscover, site">
+  <meta name="author" content="Lucas Becker">
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet">
@@ -22,21 +27,21 @@
           <span>Entradas</span>
           <img src="./assets/income.svg" alt="Imagem de Entradas">
         </h3>
-        <p>R$ 5.000,00</p>
+        <p id="incomeDisplay">R$ 0,00</p>
       </div>
       <div class="card">
         <h3>
           <span>Saídas</span>
           <img src="./assets/expense.svg" alt="Imagem de Saídas">
         </h3>
-        <p>R$ 2.000,00</p>
+        <p id="expenseDisplay">R$ 0,00</p>
       </div>
       <div class="card total">
         <h3>
           <span>Total</span>
           <img src="./assets/total.svg" alt="Imagem de Total">
         </h3>
-        <p>R$ 3.000,00</p>
+        <p id="totalDisplay">R$ 0,00</p>
       </div>
     </section>
     <section id="transactions">
@@ -46,13 +51,14 @@
         <a 
         href="#" 
         class="button new"
-        onclick="modal.open()"  
+        onclick="Modal.toggle()"  
       >
         + Nova Transação
       </a>
       <a 
         href="#" 
         class="button clear"
+        onclick="Transaction.removeAll()"
       >
         Limpar Transações
       </a>
@@ -68,30 +74,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="description">Luz</td>
-            <td class="expense">- R$ 500,00</td>
-            <td class="date">23/01/2021</td>
-            <td>
-              <img src="./assets/minus.svg" alt="Remover Transação">
-            </td>
-          </tr>
-          <tr>
-            <td class="description">Freelance</td>
-            <td class="income">R$ 6.000,00</td>
-            <td class="date">24/01/2021</td>
-            <td>
-              <img src="./assets/minus.svg" alt="Remover Transação">
-            </td>
-          </tr>
-          <tr>
-            <td class="description">Aluguel</td>
-            <td class="expense">- R$ 1.500,00</td>
-            <td class="date">26/01/2021</td>
-            <td>
-              <img src="./assets/minus.svg" alt="Remover Transação">
-            </td>
-          </tr>
+          
         </tbody>
       </table>
     </section>
@@ -101,7 +84,7 @@
     <div class="modal">
       <div class="modal-content">
         <h2>Nova Transação</h2>
-        <form>
+        <form onsubmit="Form.submit(event)">
           <div class="input-group">
             <label 
               class="sr-only" 
@@ -150,7 +133,7 @@
             <a 
               href="#" 
               class="button cancel"
-              onclick="modal.close()"  
+              onclick="Modal.toggle()"  
             >Cancelar</a>
             <button type="submit">Salvar</button>
           </div>
@@ -161,9 +144,11 @@
 
   <footer>
     <p>2021 - dev.finance$</p>
-    <p>Desenvolvido por <a href="https://lucasbecker.github.io" target="_blank" >Lucas Becker</a> durante <br>a MaratonaDiscover da Rocketseat.</p>
+    <p>Desenvolvido por <a href="https://lucasbecker.github.io" target="_blank" rel="noopener noreferrer">Lucas Becker</a> durante <br>a MaratonaDiscover da <a href="https://rocketseat.com.br/" target="_blank" rel="noopener noreferrer">Rocketseat</a>.</p>
   </footer>
 
-  <script src="./script.js"></script>
+  <a href="https://github.com/lucasbecker/dev-finances" class="github-corner" aria-label="View source on GitHub" target="_blank" rel="noopener noreferrer"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#f0f2f5; color:#2d4a22; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <script src="./scripts.js"></script>
 </body>
 </html>
