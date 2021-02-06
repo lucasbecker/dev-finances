@@ -14,8 +14,12 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
  
 ## Next Level
 - [ ] Melhorar feedback do formulário
-- [ ] Ordenar as transações por valor e/ou data
-- [ ] Refatorar
+- [X] Ordenar as transações por descrição, valor e/ou data
+- [ ] Melhorar ordenação com RegExp
+- [ ] Download das transações em PDF
+- [ ] Download das transações em JSON
+- [ ] Upload das transações em JSON
+- [ ] Refatorar e simplificar
 
 ## Deploy
 O deploy foi realizado com o *github-pages* e está disponível [aqui](https://lucasbecker.github.io/dev-finances).

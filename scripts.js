@@ -97,6 +97,95 @@ const DOM = {
   }
 }
 
+const Sort = {
+  table: document.querySelector('table'),
+  description(asc = true) {
+    const thDescription = document.querySelector('#th-description');
+    if(thDescription.classList.contains('th-sort-asc')) asc = false;
+    
+    const dirOrder = asc ? 1 : -1;
+    const tBody = Sort.table.tBodies[0];
+    const rows = Array.from(tBody.querySelectorAll('tr'));
+
+    const sortedRows = rows.sort((a, b) => {
+      const aColContent = a.querySelector(`td:nth-child(${1})`).textContent.trim();
+      const bColContent = b.querySelector(`td:nth-child(${1})`).textContent.trim();
+
+      return aColContent > bColContent ? (1 * dirOrder) : (-1 * dirOrder);
+    })
+
+    while(tBody.firstChild) {
+      tBody.removeChild(tBody.firstChild);
+    }
+
+    tBody.append(...sortedRows);
+
+    Sort.table.querySelectorAll('th')
+    .forEach(th => th.classList.remove('th-sort-asc', 'th-sort-desc'));
+    
+    Sort.table.querySelector(`th:nth-child(${1})`).classList.toggle('th-sort-asc', asc);
+    Sort.table.querySelector(`th:nth-child(${1})`).classList.toggle('th-sort-desc', !asc);
+  },
+  value(asc = true) {
+    const thValue = document.querySelector('#th-value');
+    if(thValue.classList.contains('th-sort-asc')) asc = false;
+    
+    const dirOrder = asc ? 1 : -1;
+    const tBody = Sort.table.tBodies[0];
+    const rows = Array.from(tBody.querySelectorAll('tr'));
+
+    const sortedRows = rows.sort((a, b) => {
+      const aColContent = a.querySelector(`td:nth-child(${2})`).textContent.trim();
+      const aValue = parseFloat(aColContent.replace('R$','').replace('-','').replace('.','').replace(',','.').trim());
+      const bColContent = b.querySelector(`td:nth-child(${2})`).textContent.trim();
+      const bValue = parseFloat(bColContent.replace('R$','').replace('-','').replace('.','').replace(',','.').trim());
+
+      return aValue > bValue ? (1 * dirOrder) : (-1 * dirOrder);
+    })
+
+    while(tBody.firstChild) {
+      tBody.removeChild(tBody.firstChild);
+    }
+
+    tBody.append(...sortedRows);
+
+    Sort.table.querySelectorAll('th')
+    .forEach(th => th.classList.remove('th-sort-asc', 'th-sort-desc'));
+    
+    Sort.table.querySelector(`th:nth-child(${2})`).classList.toggle('th-sort-asc', asc);
+    Sort.table.querySelector(`th:nth-child(${2})`).classList.toggle('th-sort-desc', !asc);
+  },
+  date(asc = true){
+    const thDate = document.querySelector('#th-date');
+    if(thDate.classList.contains('th-sort-asc')) asc = false;
+    
+    const dirOrder = asc ? 1 : -1;
+    const tBody = Sort.table.tBodies[0];
+    const rows = Array.from(tBody.querySelectorAll('tr'));
+
+    const sortedRows = rows.sort((a, b) => {
+      const aColContent = a.querySelector(`td:nth-child(${3})`).textContent.trim().split('/').reverse().join('-');
+      const aDate = new Date(aColContent);
+      const bColContent = b.querySelector(`td:nth-child(${3})`).textContent.trim().split('/').reverse().join('-');
+      const bDate = new Date(bColContent);
+
+      return aDate > bDate ? (1 * dirOrder) : (-1 * dirOrder);
+    })
+
+    while(tBody.firstChild) {
+      tBody.removeChild(tBody.firstChild);
+    }
+
+    tBody.append(...sortedRows);
+
+    Sort.table.querySelectorAll('th')
+    .forEach(th => th.classList.remove('th-sort-asc', 'th-sort-desc'));
+    
+    Sort.table.querySelector(`th:nth-child(${3})`).classList.toggle('th-sort-asc', asc);
+    Sort.table.querySelector(`th:nth-child(${3})`).classList.toggle('th-sort-desc', !asc);
+  }
+}
+
 const Utils = {
   formatAmount(value) {
     value = value * 100;
@@ -186,3 +275,5 @@ const App = {
 }
 
 App.init();
+
+

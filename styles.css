@@ -183,6 +183,22 @@ table thead th {
   padding: 1rem 2rem;
   text-align: left;
 }
+#th-description, 
+#th-value,
+#th-date {
+  cursor: pointer;
+}
+table thead .th-sort-asc::after{
+  content: '\25b4';
+}
+table thead .th-sort-desc::after{
+  content: '\25be';
+}
+table thead .th-sort-asc::after,
+table thead .th-sort-desc::after{
+  margin-left: 0.4rem;
+}
+
 table tbody td {
   background-color: white;
   padding: 1rem 2rem;

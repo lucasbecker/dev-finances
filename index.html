@@ -67,9 +67,9 @@
       <table id="data-table">
         <thead>
           <tr>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Data</th>
+            <th onclick="Sort.description()" id="th-description">Descrição</th>
+            <th onclick="Sort.value()" id="th-value">Valor</th>
+            <th onclick="Sort.date()" id="th-date">Data</th>
             <th></th>
           </tr>
         </thead>
@@ -108,7 +108,7 @@
             </label>
             <input 
               type="number" 
-              step="0.1"
+              step="0.01"
               name="amount" 
               id="amount" 
               placeholder="0,00"
