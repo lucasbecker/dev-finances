@@ -97,7 +97,11 @@
               name="description" 
               id="description" 
               placeholder="Descrição"
+              maxlength="50"
+              minlength="3"
+              required
             >
+            <span class="error"></span>
           </div>
           <div class="input-group">
             <label 
@@ -112,7 +116,11 @@
               name="amount" 
               id="amount" 
               placeholder="0,00"
+              min="0.05"
+              max="1000000.00"
+              required
             >
+            <span class="error"></span>
             <small class="help">Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais.</small>
           </div>
           <div class="input-group">
@@ -127,13 +135,15 @@
               name="date" 
               id="date" 
               placeholder="22/01/2021"
+              required
             >
+            <span class="error"></span>
           </div>
           <div class="input-group actions">
             <a 
               href="#" 
               class="button cancel"
-              onclick="Modal.toggle()"  
+              onclick="Form.cancel()"  
             >Cancelar</a>
             <button type="submit">Salvar</button>
           </div>

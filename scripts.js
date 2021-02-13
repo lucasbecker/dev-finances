@@ -211,6 +211,7 @@ const Utils = {
 }
 
 const Form = {
+  fields: document.querySelectorAll('[required]'),
   description: document.querySelector('input#description'),
   amount: document.querySelector('input#amount'),
   date: document.querySelector('input#date'),
@@ -221,11 +222,65 @@ const Form = {
       date: Form.date.value
     }
   },
-  validateFields() {
-    const { description, amount, date } = Form.getValues();
+  verifyErrors(field) {
+    let foundError = false;
     
-    if(description.trim() === '' || amount.trim() === '' || date.trim() === '')
-      throw new Error('Por favor, preencha todos os campos!')
+    for(error in field.validity)
+      if(field.validity[error] && !field.validity.valid)
+        foundError = error;
+
+    return foundError;
+  },
+  customFeedback(field, typeError) {
+    const spanError = field.parentNode.querySelector('span.error');
+
+    const messages = {
+      text: {
+        valueMissing: 'Uma descrição é necessária!',
+        typeMismatch: 'Por favor, insira uma descrição válida!',
+        tooLong: 'Descrição muito longa!',
+        tooShort: 'Descrição muito curta!',
+        badInput: 'Ops... Descrição incompreensível!',
+      },
+      number: {
+        valueMissing: 'O valor é obrigatório!',
+        typeMismatch: 'Por favor, insira um valor válido!',
+        rangeUnderflow: 'Valor muito pequeno!',
+        rangeOverflow: 'Valor muito grande!',
+        stepMismatch: 'Frações de centavos não são válidos!',
+        badInput: 'Ops... Valor incompreensível!',
+      },
+      date: {
+        valueMissing: 'A data é obrigatória!',
+        typeMismatch: 'Por favor, insira uma data válida!',
+        rangerUnderflow: 'Data invalida!',
+        rangerOverflow: 'Data invalida!',
+        badInput: 'Ops... Data incompreensível!',
+      }
+    }
+
+    if(typeError) {
+      spanError.classList.add('active')
+      spanError.innerHTML = messages[field.type][typeError]
+      field.style.borderColor = 'var(--red)';
+    } else {
+      spanError.classList.remove('active')
+      spanError.innerHTML = ''
+      field.style.borderColor = 'var(--green)';
+    }
+
+  },
+  validateField(event) {
+    event.preventDefault();
+    const field = event.target;
+    const hasError = Form.verifyErrors(field);
+    Form.customFeedback(field, hasError);
+  },
+  fieldsListener() {
+    for(field of Form.fields) {
+      field.addEventListener('invalid', Form.validateField);
+      field.addEventListener('blur', Form.validateField);
+    }
   },
   formatValues() {
     let { description, amount, date } = Form.getValues();
@@ -245,12 +300,17 @@ const Form = {
     Form.description.value = '';
     Form.amount.value = '';
     Form.date.value = '';
+    for(field of Form.fields) 
+      Form.customFeedback(field, false);
+  },
+  cancel(){
+    Form.clearFields();
+    Modal.toggle();
   },
   submit(event) {
     event.preventDefault();
     
     try {
-      Form.validateFields();
       const transaction = Form.formatValues();
       Form.saveTransaction(transaction);
       Form.clearFields();
@@ -266,14 +326,12 @@ const App = {
     Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
+    Form.fieldsListener();
   },
   reload() {
     DOM.clearTransactions();
     App.init();
   }
-
 }
 
 App.init();
-
-

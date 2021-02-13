@@ -54,7 +54,6 @@ a:hover {
 }
 .button{
   display: inline-block;
-  margin-bottom: .8rem;
   border-radius: 0.25rem;
   padding: 0.8rem 1rem;
 }
@@ -92,6 +91,7 @@ button {
   border: none;
   border-radius: 0.25rem;
   color: white;
+  font-size: 14px;
   background-color: var(--green);
   cursor: pointer;
 }
@@ -157,6 +157,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: .8rem;
 }
 table {
   width: 100%;
@@ -240,10 +241,11 @@ td.expense {
   padding: 2.4rem;
 
   width: 90%;
-  max-width: 500px;
+  max-width: 550px;
+  border-radius: 0.25rem;
 }
 .modal-content {
-  max-width: 500px;
+  max-width: 550px;
 }
 .modal-content h2 {
   margin-top: 0;
@@ -255,12 +257,16 @@ td.expense {
 }
 .input-group input {
   border: none;
-  border-radius: 0.2rem;
   padding: 0.8rem;
   width: 100%;
+  border-radius: 0.25rem;
+  font-size: 14px;
+  border: 1px solid transparent;
 }
+
 .input-group small {
   opacity: 0.4;
+  font-size: 12px;
 }
 .input-group.actions {
   display: flex;
@@ -270,6 +276,23 @@ td.expense {
 .input-group.actions .button,
 .input-group.actions button {
   width: 48%;
+}
+
+.input-group span.error {
+  display: flex;
+  padding: 0;
+  background-color: rgba(233, 41, 41, 0.3);
+  color: var(--red);
+  font-size: 12px;
+  border-radius: 0 0 0.2rem 0.2rem ;
+  margin-top: -2px;
+}
+
+.input-group span.error.active {
+  border-left: 1px var(--red) solid;
+  border-right: 1px var(--red) solid;
+  border-bottom: 1px var(--red) solid;
+  padding: 0.4em;
 }
 
 /*=== Footer =========*/

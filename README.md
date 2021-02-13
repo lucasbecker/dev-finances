@@ -13,7 +13,8 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
 - Leitura das transações do localStorage
  
 ## Next Level
-- [ ] Melhorar feedback do formulário
+- [ ] Fechar modal ao clicar no overlay
+- [X] Melhorar validação e feedback do formulário
 - [X] Ordenar as transações por descrição, valor e/ou data
 - [ ] Melhorar ordenação com RegExp
 - [ ] Download das transações em PDF
