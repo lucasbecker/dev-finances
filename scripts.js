@@ -82,15 +82,22 @@ const DOM = {
     return html;
   },
   updateBalance() {
+    const totalDisplay = document.querySelector('#totalDisplay');
+
     document
       .querySelector('#incomeDisplay')
       .innerHTML = Utils.formatCurrency(Transaction.incomes());
+
     document
       .querySelector('#expenseDisplay')
       .innerHTML = Utils.formatCurrency(Transaction.expenses());
-    document
-      .querySelector('#totalDisplay')
-      .innerHTML = Utils.formatCurrency(Transaction.total());
+
+    totalDisplay.innerHTML = Utils.formatCurrency(Transaction.total());
+
+    Transaction.total() < 0
+      ? totalDisplay.parentElement.classList.add('negative')
+      : totalDisplay.parentElement.classList.remove('negative');
+    
   },
   clearTransactions() {
     DOM.transactionsContainer.innerHTML = '';
@@ -245,8 +252,8 @@ const Form = {
       number: {
         valueMissing: 'O valor é obrigatório!',
         typeMismatch: 'Por favor, insira um valor válido!',
-        rangeUnderflow: 'Valor muito pequeno!',
-        rangeOverflow: 'Valor muito grande!',
+        rangeUnderflow: 'Valor muito baixo!',
+        rangeOverflow: 'Valor muito alto!',
         stepMismatch: 'Frações de centavos não são válidos!',
         badInput: 'Ops... Valor incompreensível!',
       },

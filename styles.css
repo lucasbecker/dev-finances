@@ -138,11 +138,12 @@ header {
   background-color: var(--green);
   color: white;
 }
-
+.card.total.negative {
+  background-color: var(--red);
+}
 #incomeDisplay {
   color: var(--green);
 }
-
 #expenseDisplay {
   color: var(--red);
 }

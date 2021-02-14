@@ -13,7 +13,7 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
 - Leitura das transações do localStorage
  
 ## Next Level
-- [ ] Mudar cor do card de Total conforme valor
+- [X] Mudar cor do card de Total conforme valor
 - [ ] Fechar modal ao clicar no overlay
 - [X] Melhorar validação e feedback do formulário
 - [X] Ordenar as transações por descrição, valor e/ou data
