@@ -224,7 +224,7 @@ const Form = {
   },
   verifyErrors(field) {
     let foundError = false;
-    
+
     for(error in field.validity)
       if(field.validity[error] && !field.validity.valid)
         foundError = error;
@@ -233,7 +233,7 @@ const Form = {
   },
   customFeedback(field, typeError) {
     const spanError = field.parentNode.querySelector('span.error');
-
+    
     const messages = {
       text: {
         valueMissing: 'Uma descrição é necessária!',

@@ -189,11 +189,27 @@ table thead th {
 #th-date {
   cursor: pointer;
 }
+table thead .th-sort-desc,
+table thead .th-sort-desc {
+  position: relative;
+}
 table thead .th-sort-asc::after{
-  content: '\25b4';
+  content: '';
+  position: absolute;
+  background-image: url('assets/arrow-up.svg');
+  background-size: cover;
+  background-position: center;
+  width: 18px;
+  height: 18px;
 }
 table thead .th-sort-desc::after{
-  content: '\25be';
+  content: '';
+  position: absolute;
+  background-image: url('assets/arrow-down.svg');
+  background-size: cover;
+  background-position: center;
+  width: 18px;
+  height: 18px;
 }
 table thead .th-sort-asc::after,
 table thead .th-sort-desc::after{
