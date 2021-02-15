@@ -52,16 +52,16 @@
         href="#" 
         class="button new"
         onclick="Modal.toggle()"  
-      >
-        + Nova Transação
-      </a>
-      <a 
-        href="#" 
-        class="button clear"
-        onclick="Transaction.removeAll()"
-      >
-        Limpar Transações
-      </a>
+        >
+          + Nova Transação
+        </a>
+        <a 
+          href="#" 
+          class="button clear"
+          onclick="Transaction.removeAll()"
+        >
+          Limpar Transações
+        </a>
       </div>
 
       <table id="data-table">
@@ -77,6 +77,38 @@
           
         </tbody>
       </table>
+
+      <div class="actions bottom">
+        <div class="json">
+          <a 
+          href="#"
+          class="button download"
+          onclick="Storage.download(e)"  
+          >
+            Download JSON
+          </a>
+
+          <div class="button-wrapper">
+            <label for="upload" class="upload">Upload JSON</label>
+            <input
+              type="file"
+              onclick=""  
+              placeholder="Upload JSON"
+              title="Upload JSON"
+              name="upload"
+              id="upload"
+            >
+          </div>
+        </div>
+
+        <a 
+        href="#"
+        class="button download"
+        onclick=""  
+        >
+          Download PDF
+        </a>
+      </div>
     </section>
   </main>
 

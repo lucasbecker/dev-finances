@@ -8,17 +8,16 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
 - Listagem das transações
 - Cadastro de novas transações
 - Exclusão de transações específicas
-- Exclusão de todas as transações
 - Escrita das transações no localStorage
 - Leitura das transações do localStorage
  
 ## Next Level
 - [X] Mudar cor do card de Total conforme valor
-- [ ] Fechar modal ao clicar no overlay
+- [X] Exclusão de todas as transações
 - [X] Melhorar validação e feedback do formulário
 - [X] Ordenar as transações por descrição, valor e/ou data
 - [ ] Download das transações em PDF
-- [ ] Download das transações em JSON
+- [X] Download das transações em JSON
 - [ ] Upload das transações em JSON
 - [ ] Refatorar e simplificar
 

@@ -22,6 +22,26 @@ const Storage = {
   },
   set(transaction) {
     localStorage.setItem('dev.finances:transaction', JSON.stringify(transaction));
+  },
+  download(e) {
+    e.preventDefault();
+
+    const data = JSON.stringify(Storage.get(), null, 4);
+    const blob = new Blob([data], {type: 'application/json'});
+    const url = window.URL.createObjectURL(blob);
+
+    const date = new Date();
+    const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    const link = document.createElement('a');
+    link.download = `devfinances-${today}.json`;
+    link.href = url;
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+  },
+  upload() {
+    // code here
   }
 }
 
@@ -214,6 +234,29 @@ const Utils = {
     });
 
     return signal + value;
+  },
+  createPDF() {
+    const table = document.querySelector('#data-table').innerHTML;
+    console.log(table);
+    const style = `
+      <style>
+
+      </style>
+    `;
+    const pdf = window.open('', '', 'height=300 ,width=300');
+    pdf.document.write(`
+      <html>
+        <head>
+          <title>dev.finances PDF</title>
+          ${style}
+        </head>
+        <body>
+          ${table}
+        </body>
+      </html>
+    `);
+    pdf.document.close();
+    
   }
 }
 

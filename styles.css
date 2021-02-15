@@ -82,7 +82,17 @@ a:hover {
   opacity: 0.6;
 }
 .button.cancel:hover {
-  opacity: 1;
+  border: 2px solid var(--green);
+}
+.button.download, 
+.upload {
+  border: 2px solid var(--green);
+  color: var(--green);
+}
+.button.download:hover, 
+.upload:hover {
+  border: 2px solid var(--green-light);
+  color: var(--green-light);
 }
 button {
   width: 100%;
@@ -230,7 +240,36 @@ td.income {
 td.expense {
   color: var(--red);
 }
+#transactions .actions.bottom {
+  margin-top: .8rem;
+  margin-bottom: 0;
+}
+#transactions .actions.bottom .json {
+  display: flex;
+}
+.button-wrapper {
+  margin-left: 0.8rem;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+}
 
+.button-wrapper label {
+  display: inline-block;
+  border-radius: 0.25rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+}
+.button-wrapper #upload {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: -1;
+  cursor: pointer;
+}
 /*=== Modal ======*/
 .modal-overlay {
   width: 100%;
