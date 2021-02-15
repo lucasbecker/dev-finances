@@ -82,7 +82,8 @@ a:hover {
   opacity: 0.6;
 }
 .button.cancel:hover {
-  border: 2px solid var(--green);
+  border: 2px solid var(--red);
+  opacity: 1;
 }
 .button.download, 
 .upload {
@@ -189,6 +190,9 @@ table thead tr th:last-child,
 table tbody tr td:last-child {
   border-radius: 0 0.25rem 0.25rem 0;
 }
+table tbody tr td:last-child {
+  cursor: pointer;
+}
 table thead th {
   background-color: white;
   font-weight: normal;
@@ -240,6 +244,7 @@ td.income {
 td.expense {
   color: var(--red);
 }
+
 #transactions .actions.bottom {
   margin-top: .8rem;
   margin-bottom: 0;
@@ -247,15 +252,24 @@ td.expense {
 #transactions .actions.bottom .json {
   display: flex;
 }
-.button-wrapper {
+.actions.bottom .button {
+  display: flex;
+  align-items: center;
+}
+.actions.bottom svg {
+  margin-left: 0.8rem;
+  width: 18px;
+  height: 18px;
+}
+.json .button-wrapper {
   margin-left: 0.8rem;
   position: relative;
   text-align: center;
   cursor: pointer;
 }
-
-.button-wrapper label {
-  display: inline-block;
+.json .button-wrapper label {
+  display: flex;
+  align-items: center;
   border-radius: 0.25rem;
   padding: 0.8rem 1rem;
   cursor: pointer;

@@ -83,13 +83,15 @@
           <a 
           href="#"
           class="button download"
-          onclick="Storage.download(e)"  
+          onclick="Utils.download(event)"  
           >
             Download JSON
           </a>
 
           <div class="button-wrapper">
-            <label for="upload" class="upload">Upload JSON</label>
+            <label for="upload" class="upload">
+              Upload JSON
+            </label>
             <input
               type="file"
               onclick=""  
@@ -97,6 +99,7 @@
               title="Upload JSON"
               name="upload"
               id="upload"
+              accept=".json, application/json"
             >
           </div>
         </div>
@@ -177,7 +180,9 @@
               class="button cancel"
               onclick="Form.cancel()"  
             >Cancelar</a>
-            <button type="submit">Salvar</button>
+            <button type="submit">
+              Salvar
+            </button>
           </div>
         </form>
       </div>

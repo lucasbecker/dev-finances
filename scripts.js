@@ -22,26 +22,6 @@ const Storage = {
   },
   set(transaction) {
     localStorage.setItem('dev.finances:transaction', JSON.stringify(transaction));
-  },
-  download(e) {
-    e.preventDefault();
-
-    const data = JSON.stringify(Storage.get(), null, 4);
-    const blob = new Blob([data], {type: 'application/json'});
-    const url = window.URL.createObjectURL(blob);
-
-    const date = new Date();
-    const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
-    const link = document.createElement('a');
-    link.download = `devfinances-${today}.json`;
-    link.href = url;
-    link.click();
-    link.remove();
-
-    window.URL.revokeObjectURL(url);
-  },
-  upload() {
-    // code here
   }
 }
 
@@ -257,6 +237,46 @@ const Utils = {
     `);
     pdf.document.close();
     
+  },
+  download(e) {
+    e.preventDefault();
+
+    const data = JSON.stringify(Storage.get(), null, 4);
+    const blob = new Blob([data], {type: 'application/json'});
+    const url = window.URL.createObjectURL(blob);
+
+    const date = new Date();
+    const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    const link = document.createElement('a');
+    link.download = `devfinances-${today}.json`;
+    link.href = url;
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+  },
+  upload() {
+    const inputFile = document.querySelector('#upload');
+    inputFile.addEventListener('change', e => {
+      const file = e.target.files[0];
+
+      if(file) {
+        document.querySelector('.button-wrapper label').innerHTML = file.name;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          Storage.set(JSON.parse(reader.result));
+          // recarregar app de forma correta
+          // App.reload() não está funcionando aqui, investigar
+          location.reload();
+        };
+        reader.readAsText(file);
+
+      } else {
+        document.querySelector('.button-wrapper label').innerHTML = 'Upload JSON';
+      };
+
+    })
   }
 }
 
@@ -377,6 +397,7 @@ const App = {
     DOM.updateBalance();
     Storage.set(Transaction.all);
     Form.fieldsListener();
+    Utils.upload();
   },
   reload() {
     DOM.clearTransactions();
