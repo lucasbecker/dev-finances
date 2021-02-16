@@ -4,21 +4,24 @@
 Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover da [Rocketseat](https://rocketseat.com.br/), utilizando HTML, CSS e JavaScript.
 
 ### Features
-- Exibição dos valores de entradas, saídas e total
+- Exibição dos valores de entradas, saídas e total conforme transações
 - Listagem das transações
-- Cadastro de novas transações
-- Exclusão de transações específicas
+- Cadastro de transação
+- Exclusão de transação
 - Escrita das transações no localStorage
 - Leitura das transações do localStorage
  
 ## Next Level
-- [X] Mudar cor do card de Total conforme valor
+- [X] Alteração da cor do card de total conforme saldo
 - [X] Exclusão de todas as transações
-- [X] Melhorar validação e feedback do formulário
-- [X] Ordenar as transações por descrição, valor e/ou data
-- [ ] Download das transações em PDF
+- [X] Validação e feedback do formulário
+  - Utilizando ValidityState API
+- [X] Ordenação das transações por descrição, valor e/ou data
 - [X] Download das transações em JSON
-- [ ] Upload das transações em JSON
+  - Utilizando Blob API
+- [X] Upload das transações em JSON
+  - Utilizando FileReader API
+- [ ] Download das transações em PDF
 - [ ] Refatorar e simplificar
 
 ## Deploy
