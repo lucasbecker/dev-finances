@@ -31,6 +31,10 @@ const Transaction = {
     Transaction.all.push(transaction);
     App.reload();
   },
+  addAll(transactions) {
+    Transaction.all.splice(0, Transaction.all.length, ...transactions);
+    App.reload();
+  },
   remove(index) {
     Transaction.all.splice(index, 1);
     App.reload();
@@ -55,6 +59,41 @@ const Transaction = {
   },
   total() {
     return Transaction.incomes() + Transaction.expenses();
+  },
+  download(e) {
+    e.preventDefault();
+
+    const data = JSON.stringify(Storage.get(), null, 4);
+    const blob = new Blob([data], {type: 'application/json'});
+    const url = window.URL.createObjectURL(blob);
+
+    const date = new Date();
+    const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    const link = document.createElement('a');
+    link.download = `devfinances-${today}.json`;
+    link.href = url;
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+  },
+  upload(e) {
+    const file = e.target.files[0];
+
+    if(file) {
+      document.querySelector('.button-wrapper label').innerHTML = file.name;
+
+      const reader = new FileReader();
+      reader.onload = () => Transaction.addAll(JSON.parse(reader.result));
+      reader.readAsText(file);
+
+    } else {
+      document.querySelector('.button-wrapper label').innerHTML = 'Upload JSON';
+    };
+  },
+  uploadListener() {
+    const inputFile = document.querySelector('#upload');
+    inputFile.addEventListener('change', e => Transaction.upload(e))
   }
 };
 
@@ -237,46 +276,6 @@ const Utils = {
     `);
     pdf.document.close();
     
-  },
-  download(e) {
-    e.preventDefault();
-
-    const data = JSON.stringify(Storage.get(), null, 4);
-    const blob = new Blob([data], {type: 'application/json'});
-    const url = window.URL.createObjectURL(blob);
-
-    const date = new Date();
-    const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
-    const link = document.createElement('a');
-    link.download = `devfinances-${today}.json`;
-    link.href = url;
-    link.click();
-    link.remove();
-
-    window.URL.revokeObjectURL(url);
-  },
-  upload() {
-    const inputFile = document.querySelector('#upload');
-    inputFile.addEventListener('change', e => {
-      const file = e.target.files[0];
-
-      if(file) {
-        document.querySelector('.button-wrapper label').innerHTML = file.name;
-
-        const reader = new FileReader();
-        reader.onload = () => {
-          Storage.set(JSON.parse(reader.result));
-          // recarregar app de forma correta
-          // App.reload() não está funcionando aqui, investigar
-          location.reload();
-        };
-        reader.readAsText(file);
-
-      } else {
-        document.querySelector('.button-wrapper label').innerHTML = 'Upload JSON';
-      };
-
-    })
   }
 }
 
@@ -396,8 +395,9 @@ const App = {
     Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
+
     Form.fieldsListener();
-    Utils.upload();
+    Transaction.uploadListener();
   },
   reload() {
     DOM.clearTransactions();
