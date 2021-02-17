@@ -131,6 +131,10 @@ header {
   border-radius: 0.25rem;
   margin-bottom: 1.4rem;
   color: var(--blue-dark);
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-0.8rem);
 }
 .card h3 {
   font-weight: normal;
@@ -385,5 +389,31 @@ footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .actions,
+  .json {
+    flex-direction: column;
+    width: 100%;
+  }
+  #transactions .actions {
+    margin-bottom: 0;
+
+  }
+  #transactions .actions .button{
+    width: 100%;
+    margin-bottom: 0.8rem;
+  }
+  .json .button-wrapper {
+    margin-left: 0;
+    margin-bottom: 0.8rem;
+  }
+  .input-group {
+    flex-direction: row;
+  }
+  footer {
+    padding-top: 0.8rem;
   }
 }

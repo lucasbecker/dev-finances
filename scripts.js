@@ -68,7 +68,7 @@ const Transaction = {
     const url = window.URL.createObjectURL(blob);
 
     const date = new Date();
-    const today = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    const today = `${date.getDate()}-${date.getMonth() < 10? '0'+date.getMonth(): date.getMonth()}-${date.getFullYear()}`;
     const link = document.createElement('a');
     link.download = `devfinances-${today}.json`;
     link.href = url;
@@ -254,28 +254,88 @@ const Utils = {
 
     return signal + value;
   },
-  createPDF() {
-    const table = document.querySelector('#data-table').innerHTML;
-    console.log(table);
-    const style = `
-      <style>
+  createPDF(e) {
+    e.preventDefault();
+    const doc = new jsPDF();
 
-      </style>
-    `;
-    const pdf = window.open('', '', 'height=300 ,width=300');
-    pdf.document.write(`
-      <html>
-        <head>
-          <title>dev.finances PDF</title>
-          ${style}
-        </head>
-        <body>
-          ${table}
-        </body>
-      </html>
-    `);
-    pdf.document.close();
-    
+    const income = Utils.formatCurrency(Transaction.incomes()).trim();
+    const expense = Utils.formatCurrency(Transaction.expenses());
+    const total = Transaction.total();
+
+    const date = new Date();
+    const today = `${date.getDate()}/${date.getMonth() < 10? '0'+date.getMonth(): date.getMonth()}/${date.getFullYear()}`;
+    const todayName = `${date.getDate()}-${date.getMonth() < 10? '0'+date.getMonth(): date.getMonth()}-${date.getFullYear()}`;
+
+    doc.setFontSize(12);
+    doc.text(20, 20, 'dev.finance$');
+
+    doc.text(168, 20, today);
+
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(73, 170, 38);
+    doc.roundedRect(20, 30, 50, 25, 1, 1, "FD");
+    doc.setDrawColor(233, 41, 41);
+    doc.roundedRect(80, 30, 50, 25, 1, 1, "FD");
+    if(total > 0) {
+      doc.setDrawColor(73, 170, 38);
+      doc.setFillColor(73, 170, 38);
+    } else {
+      doc.setDrawColor(233, 41, 41);
+      doc.setFillColor(233, 41, 41);
+    }
+    doc.roundedRect(140, 30, 50, 25, 1, 1, "FD");
+
+    doc.setFontSize(12);
+    doc.setTextColor(73, 170, 38);
+    doc.text("Entradas", 25, 40);
+    doc.setTextColor(233, 41, 41);
+    doc.text("Saídas", 85, 40);
+    doc.setTextColor(255, 255, 255);
+    doc.text("Total", 145, 40);
+
+    doc.setFontSize(18);
+    doc.setFontType('bold')
+    doc.setTextColor(73, 170, 38);
+    doc.text(income, 25, 50);
+    doc.setTextColor(233, 41, 41);
+    doc.text(expense, 85, 50);
+    doc.setTextColor(255, 255, 255);
+    doc.text(Utils.formatCurrency(total), 145, 50);
+
+    doc.setDrawColor(73, 170, 38);
+    doc.line(20, 75, 190, 75);
+
+    doc.setFontSize(12);
+    doc.setFontType('bold')
+    doc.setTextColor(0, 0, 0);
+    doc.text("Descrição", 20, 70);
+    doc.text("Valor", 110, 70);
+    doc.text("Data", 160, 70);
+
+    doc.setFontSize(12);
+    doc.setFontType('normal')
+
+    Transaction.all.forEach((transaction, index) => {
+      let row = 85 + (index * 10)
+
+      doc.setTextColor(0, 0, 0);
+      doc.text(String(transaction.description), 20, row);
+      doc.text(String(transaction.date), 160, row);
+
+      if(transaction.amount > 0) {
+        doc.setTextColor(73, 170, 38);
+        doc.text(Utils.formatCurrency(transaction.amount), 110, row);
+      } else {
+        doc.setTextColor(233, 41, 41);
+        doc.text(Utils.formatCurrency(transaction.amount), 110, row);
+      }
+    })
+
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text('https://lucasbecker.github.io/dev-finances/', 105, 285, null, null, "center");
+
+    doc.save(`devfinances-${todayName}.pdf`);
   }
 }
 

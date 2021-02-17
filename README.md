@@ -10,6 +10,8 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
 - Exclusão de transação
 - Escrita das transações no localStorage
 - Leitura das transações do localStorage
+- Responsividade
+- Modal
  
 ## Next Level
 - [X] Alteração da cor do card de total conforme saldo
@@ -18,7 +20,7 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
 - [X] Ordenação das transações por descrição, valor e/ou data
 - [X] Download das transações em JSON utilizando Blob API
 - [X] Upload das transações em JSON utilizando FileReader API
-- [ ] Download das informações em PDF
+- [X] Download das informações em PDF utilizando jsPDF
 - [ ] Refatorar e simplificar
 
 ## Deploy
