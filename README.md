@@ -15,6 +15,7 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
  
 ## Next Level
 - [X] Alteração da cor do card de total conforme saldo
+- [X] Fechar modal ao clicar no overlay
 - [X] Exclusão de todas as transações
 - [X] Validação e feedback do formulário utilizando ValidityState API
 - [X] Ordenação das transações por descrição, valor e/ou data

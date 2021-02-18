@@ -13,6 +13,10 @@ const Modal = {
     document
       .querySelector('.modal-overlay')
       .classList.toggle('active');    
+  },
+  overlayToggle(event) {
+    if(event.target === document.querySelector('.modal-overlay'))
+      Modal.toggle();
   }
 };
 
