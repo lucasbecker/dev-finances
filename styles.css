@@ -248,7 +248,7 @@ input[type="search"]::-webkit-search-results-decoration {
   padding: 0.25rem 0.5rem;
   outline-color: var(--blue-dark);
   outline-width: 1px;
-  background: var(--off-white) url('/assets/search.svg') no-repeat scroll 98%;
+  background: var(--off-white) url('assets/search.svg') no-repeat scroll 98%;
 }
 
 table thead .th-sort-desc,
