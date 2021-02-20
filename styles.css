@@ -15,10 +15,15 @@
 }
 html {
   font-size: 93.75%; /* 15px */
+  overflow-x: hidden;
 }
 body {
   background-color: var(--off-white);
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+main {
+  position: relative;
 }
 .container {
   width: min(90vw, 800px);
@@ -191,6 +196,7 @@ table {
 }
 table tbody tr {
   opacity: 0.7;
+  height: auto;
 }
 table tbody tr:hover {
   opacity: 1;
@@ -198,6 +204,7 @@ table tbody tr:hover {
 table thead tr th:first-child,
 table tbody tr td:first-child {
   border-radius: 0.25rem 0 0 0.25rem;
+  width: 40%;
 }
 table thead tr th:last-child,
 table tbody tr td:last-child {
@@ -331,6 +338,9 @@ td.expense {
 
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 999;
 
   display: flex;
@@ -426,6 +436,7 @@ footer p {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
+  
 }
 
 @media (max-width: 500px) {
