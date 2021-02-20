@@ -20,6 +20,7 @@ Aplicação web de controle de finanças desenvolvida durante a MaratonaDiscover
 - [X] Edição de transação
 - [X] Validação e feedback dos formulários utilizando ValidityState API
 - [X] Ordenação das transações por descrição, valor e/ou data
+- [X] Filtragem das transações pela descrição
 - [X] Download das transações em JSON utilizando Blob API
 - [X] Upload das transações em JSON utilizando FileReader API
 - [X] Download das informações em PDF utilizando jsPDF

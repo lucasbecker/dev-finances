@@ -232,6 +232,28 @@ const DOM = {
   }
 }
 
+const Filter = {
+  input: document.querySelector('#search'),
+  table: document.querySelector('table'),
+  transactions() {
+    const tBody = Filter.table.tBodies[0];
+    const rows = Array.from(tBody.querySelectorAll('tr'));
+
+    Filter.input.addEventListener('keyup', (e) => {
+      const query = e.target.value.toUpperCase();
+      
+      const filteredRows = rows.filter(row =>
+        row.querySelector('.description').textContent.toUpperCase().includes(query));
+
+      while(tBody.firstChild) {
+        tBody.removeChild(tBody.firstChild);
+      }
+
+      tBody.append(...filteredRows);
+    })
+  }
+}
+
 const Sort = {
   table: document.querySelector('table'),
   description(asc = true) {
@@ -546,6 +568,8 @@ const Form = {
       field.value = '';
       Form.customFeedback(field, false);
     }
+
+    document.querySelector('#search').value = '';
   },
   cancel(action){
     Form.clearFields();
@@ -574,7 +598,7 @@ const App = {
     Transaction.all.forEach(DOM.addTransaction);
     DOM.updateBalance();
     Storage.set(Transaction.all);
-
+    Filter.transactions();
     Form.fieldsListener();
     Transaction.uploadListener();
   },
