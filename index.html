@@ -51,7 +51,7 @@
         <a 
         href="#" 
         class="button new"
-        onclick="Modal.toggle()"  
+        onclick="Modal.toggle('add')"  
         >
           + Nova Transação
         </a>
@@ -115,11 +115,11 @@
     </section>
   </main>
 
-  <div class="modal-overlay" onclick="Modal.overlayToggle(event)">
+  <div class="modal-overlay add" onclick="Modal.overlayToggle(event)">
     <div class="modal">
       <div class="modal-content">
-        <h2>Nova Transação</h2>
-        <form onsubmit="Form.submit(event)">
+        <h2>Adicionar Transação</h2>
+        <form onsubmit="Form.submit(event, 'add')">
           <div class="input-group">
             <label 
               class="sr-only" 
@@ -178,12 +178,22 @@
             <a 
               href="#" 
               class="button cancel"
-              onclick="Form.cancel()"  
+              onclick="Form.cancel('add')"  
             >Cancelar</a>
             <button type="submit">
               Salvar
             </button>
           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay edit" onclick="Modal.overlayToggle(event)">
+    <div class="modal">
+      <div class="modal-content">
+        <h2>Editar Transação</h2>
+        <form onsubmit="Form.submit(event, 'edit')" >
         </form>
       </div>
     </div>

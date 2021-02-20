@@ -1,22 +1,21 @@
 const Modal = {
-  open() {
-    document
-      .querySelector('.modal-overlay')
-      .classList.add('active');    
-  },
-  close() {
-    document
-      .querySelector('.modal-overlay')
-      .classList.remove('active');
-  },
-  toggle() {
-    document
-      .querySelector('.modal-overlay')
-      .classList.toggle('active');    
+  toggle(action) {
+    if(action === 'add') 
+      document
+        .querySelector('.modal-overlay.add')
+        .classList.toggle('active');    
+    
+    if(action === 'edit') 
+      document
+        .querySelector('.modal-overlay.edit')
+        .classList.toggle('active');  
   },
   overlayToggle(event) {
-    if(event.target === document.querySelector('.modal-overlay'))
-      Modal.toggle();
+    if(event.target === document.querySelector('.modal-overlay.add')) 
+      Form.cancel('add');
+      
+    if(event.target === document.querySelector('.modal-overlay.edit')) 
+      Form.cancel('edit');
   }
 };
 
@@ -45,6 +44,10 @@ const Transaction = {
   },
   removeAll(){
     Transaction.all.splice(0, Transaction.all.length);
+    App.reload();
+  },
+  edit(id, transaction) {
+    Transaction.all.splice(id, 1, transaction);
     App.reload();
   },
   incomes() {
@@ -118,7 +121,8 @@ const DOM = {
       <td class="${cssClass}">${amount}</td>
       <td class="date">${transaction.date}</td>
       <td>
-        <img src="./assets/minus.svg" alt="Remover Transação" onclick="Transaction.remove(${index})">
+      <img src="./assets/edit.svg" alt="Remover Transação" onclick="DOM.editTransaction(${index})">
+        <img src="./assets/remove.svg" alt="Remover Transação" onclick="Transaction.remove(${index})">
       </td>
     `;
 
@@ -144,6 +148,87 @@ const DOM = {
   },
   clearTransactions() {
     DOM.transactionsContainer.innerHTML = '';
+  },
+  editTransaction(id) {
+    const { description, amount, date } = Transaction.all[id];
+
+    const reverseAmount = Utils.reverseAmount(amount);
+    const reverseDate = Utils.reverseDate(date);
+
+    const fields = `
+      <input type="hidden" id="transactionId" name="transactionId" value="${id}">
+      <div class="input-group">
+        <label 
+          class="sr-only" 
+          for="description"
+        >
+          Descrição
+        </label>
+        <input 
+          type="text" 
+          name="description" 
+          id="description" 
+          placeholder="Descrição"
+          maxlength="50"
+          minlength="3"
+          value="${description}"
+          required
+        >
+        <span class="error"></span>
+        </div>
+        <div class="input-group">
+          <label 
+            class="sr-only" 
+            for="amount"
+          >
+            Valor
+          </label>
+          <input 
+            type="number" 
+            step="0.01"
+            name="amount" 
+            id="amount" 
+            placeholder="0,00"
+            min="-1000000.00"
+            max="1000000.00"
+            value="${reverseAmount}"
+            required
+          >
+          <span class="error"></span>
+          <small class="help">Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais.</small>
+        </div>
+        <div class="input-group">
+          <label 
+            class="sr-only" 
+            for="date"
+          >
+            Data
+          </label>
+          <input 
+            type="date" 
+            name="date" 
+            id="date" 
+            placeholder="22/01/2021"
+            value="${reverseDate}"
+            required
+          >
+          <span class="error"></span>
+        </div>
+        <div class="input-group actions">
+          <a 
+            href="#" 
+            class="button cancel"
+            onclick="Form.cancel('edit')"  
+          >Cancelar</a>
+          <button type="submit">
+            Salvar
+          </button>
+        </div>
+    `;
+
+    document.querySelector('.edit form').innerHTML = fields;
+    Form.fieldsListener();
+    Modal.toggle('edit');
   }
 }
 
@@ -241,10 +326,18 @@ const Utils = {
     value = value * 100;
     return Math.round(value);
   },
+  reverseAmount(value) {
+    return value/100;
+  },
   formatDate(date) {
     const splittedDate = date.split('-');
     splittedDate.reverse();
     return splittedDate.join('/');
+  },
+  reverseDate(date) {
+    const splittedDate = date.split('/');
+    splittedDate.reverse();
+    return splittedDate.join('-');
   },
   formatCurrency(value) {
     const signal = Number(value) < 0 ? '-' : ' ';
@@ -344,15 +437,19 @@ const Utils = {
 }
 
 const Form = {
-  fields: document.querySelectorAll('[required]'),
-  description: document.querySelector('input#description'),
-  amount: document.querySelector('input#amount'),
-  date: document.querySelector('input#date'),
-  getValues() {
+  getValuesAdd() {
     return {
-      description: Form.description.value,
-      amount: Form.amount.value,
-      date: Form.date.value
+      description: document.querySelector('.add input#description').value,
+      amount: document.querySelector('.add input#amount').value,
+      date: document.querySelector('.add input#date').value,
+    }
+  },
+  getValuesEdit() {
+    return {
+      transactionId: document.querySelector('.edit input#transactionId').value,
+      description: document.querySelector('.edit input#description').value,
+      amount: document.querySelector('.edit input#amount').value,
+      date: document.querySelector('.edit input#date').value,
     }
   },
   verifyErrors(field) {
@@ -410,13 +507,13 @@ const Form = {
     Form.customFeedback(field, hasError);
   },
   fieldsListener() {
-    for(field of Form.fields) {
+    for(field of document.querySelectorAll('[required]')) {
       field.addEventListener('invalid', Form.validateField);
       field.addEventListener('blur', Form.validateField);
     }
   },
-  formatValues() {
-    let { description, amount, date } = Form.getValues();
+  formatValuesAdd() {
+    let { description, amount, date } = Form.getValuesAdd();
     amount = Utils.formatAmount(amount);
     date = Utils.formatDate(date);
 
@@ -426,30 +523,48 @@ const Form = {
       date
     };
   },
-  saveTransaction(transaction) {
+  formatValuesEdit() {
+    let { transactionId, description, amount, date } = Form.getValuesEdit();
+    amount = Utils.formatAmount(amount);
+    date = Utils.formatDate(date);
+
+    return {
+      transactionId,
+      description,
+      amount,
+      date
+    };
+  },
+  addTransaction(transaction) {
     Transaction.add(transaction)
   },
+  editTransaction(id, transaction) {
+    Transaction.edit(id, transaction)
+  },
   clearFields() {
-    Form.description.value = '';
-    Form.amount.value = '';
-    Form.date.value = '';
-    for(field of Form.fields) 
+    for(field of document.querySelectorAll('[required]')){
+      field.value = '';
       Form.customFeedback(field, false);
+    }
   },
-  cancel(){
+  cancel(action){
     Form.clearFields();
-    Modal.toggle();
+    Modal.toggle(action);
   },
-  submit(event) {
+  submit(event, action) {
     event.preventDefault();
-    
-    try {
-      const transaction = Form.formatValues();
-      Form.saveTransaction(transaction);
+    if(action === 'add') {
+      const transaction = Form.formatValuesAdd();
+      Form.addTransaction(transaction);
       Form.clearFields();
-      Modal.toggle();
-    } catch (error) {
-      alert(error.message);
+      Modal.toggle('add');
+    }
+
+    if(action === 'edit'){
+      const {transactionId, description, amount, date} = Form.formatValuesEdit();
+      Form.editTransaction(transactionId, {description, amount, date});
+      Form.clearFields();
+      Modal.toggle('edit')
     }
   }
 }
